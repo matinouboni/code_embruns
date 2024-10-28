@@ -2,6 +2,7 @@
 #define _SCHEMA_H
 
 #include "Lagrangienne.h"
+#include<vector>
 
 class Schema
 {
@@ -11,7 +12,7 @@ protected:
     // Temps en cours
     double _t;
     // Vecteur initial et vecteur solution
-    Eigen::VectorXd _sol0, _sol;
+    std::vector _sol0, _sol;
     // Pointeur vers le système d'EDO
     Lagrangienne* _sys;
 
@@ -21,13 +22,31 @@ public:
     // Destructeur par défaut
     virtual ~Schema();
     // Initialisation des différentes variables
-    void Initialize(double t0, double dt, Eigen::VectorXd& sol0, const std::string& name_file, Lagrangienne* sys);
+    void Initialize(double t0, double dt, std::vector& sol0, const std::string& name_file, Lagrangienne* sys);
     // Enregistre la solution dans un fichier
     void SaveSolution();
     // Effectue une étape du schéma en temps
-    void Advance();
+    virtual void Advance() = 0;
     // Permet de récupérer _sol
-    const Eigen::VectorXd& GetIterateSolution() const;
+    const std::vector& GetIterateSolution() const;
+};
+
+class EulerScheme : public TimeScheme
+{
+  public:
+  void Advance();
+};
+
+class RungeKuttaScheme4 : public TimeScheme
+{
+  public:
+  void Advance();
+};
+
+class ExponentialScheme : public TimeScheme
+{
+  public:
+  void Advance();
 };
 
 #endif // _SCHEMA_H
