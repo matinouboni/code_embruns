@@ -1,9 +1,10 @@
 #ifndef _LAGRANGIENNE_H
 #define _LAGRANGIENNE_H
 
-#include <Eigen/Eigen/Dense>
+//#include <Eigen/Eigen/Dense>
 #include <fstream>
 #include <string>
+#include <vector>
 
 class Lagrangienne
 {
@@ -13,9 +14,13 @@ private:
 
 protected:
     // La fonction F
-    Eigen::VectorXd _F;
+    std::vector<double> _F;
     // Écriture du fichier
     std::ofstream _file_out;
+    // Entier pour choisir le shéma : 0 pour euler explicite, 1 pour mélange exponentiel et euler explicite
+    int _cas;
+
+    double u,g,pi,rhow,T_air,Lv;
 
 public:
     // Constructeur par défaut
@@ -25,20 +30,22 @@ public:
     // Initialiser le nom du fichier de solution
     void InitializeFileName(const std::string& file_name);
     // Sauvegarder la solution
-    virtual void SaveSolution(const double t, const Eigen::VectorXd& sol);
+    virtual void SaveSolution(const double t, const std::vector<double> sol);
 
     // Récupérer _F
-    const Eigen::VectorXd& GetF() const;
+    const std::vector<double>& GetF() const;
 
     // Construction des sous-fonctions
-    double M(const double t, const Eigen::VectorXd& X);
-    double R(const double t, const Eigen::VectorXd& X);
-    double T(const double t, const Eigen::VectorXd& X);
-    double b(const double a);
-    double tau(const double a);
+    double M(const std::vector<double>& X);
+    double R(const std::vector<double>& X);
+    double T(const std::vector<double>& X);
+    double b(const std::vector<double>& X);
+    double tauD(const std::vector<double>& X);
+    double tauT(const std::vector<double>& X);
+    double kae(const std::vector<double>& X);
 
     // Construire F (doit être implémentée dans les classes dérivées)
-    virtual void BuildF(const double t, const Eigen::VectorXd& X) = 0;
+    virtual void BuildF(const std::vector<double>& X) = 0;
 };
 
 #endif // _LAGRANGIENNE_H

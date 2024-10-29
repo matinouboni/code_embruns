@@ -11,7 +11,7 @@ protected:
     // Temps en cours
     double _t;
     // Vecteur initial et vecteur solution
-    Eigen::VectorXd _sol0, _sol;
+    std::vector<double> _sol0, _sol;
     // Pointeur vers le système d'EDO
     Lagrangienne* _sys;
 
@@ -21,13 +21,13 @@ public:
     // Destructeur par défaut
     virtual ~Schema();
     // Initialisation des différentes variables
-    void Initialize(double t0, double dt, Eigen::VectorXd& sol0, const std::string& name_file, Lagrangienne* sys);
+    void Initialize(double t0, double dt, std::vector<double>& sol0, const std::string& name_file, Lagrangienne* sys);
     // Enregistre la solution dans un fichier
     void SaveSolution();
     // Effectue une étape du schéma en temps
     void Advance();
     // Permet de récupérer _sol
-    const Eigen::VectorXd& GetIterateSolution() const;
+    const std::vector<double>& GetIterateSolution() const;
 };
 
 #endif // _SCHEMA_H

@@ -1,8 +1,8 @@
 #include "Schema.h"
 #include <string>
 #include <iostream>
-using namespace std;
-using namespace Eigen;
+//using namespace std;
+//using namespace Eigen;
 
 int main()
 {
