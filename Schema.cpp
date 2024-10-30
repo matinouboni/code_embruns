@@ -4,8 +4,8 @@
 #include "Schema.h"
 #include <iostream>
 
-using namespace Eigen;
-using namespace std;
+//using namespace Eigen;
+//using namespace std;
 
 // Constructeur par défaut 
 Schema::Schema() : _sys(0)
@@ -18,7 +18,7 @@ Schema::~Schema()
 }
 
 // Initialisation des différentes variables
-void Schema::Initialize(double t0, double dt, Eigen::VectorXd& sol0, const std::string& name_file, Lagrangienne* sys)
+void Schema::Initialize(double t0, double dt, std::vector<double>& sol0, const std::string& name_file, Lagrangienne* sys)
 {
 }
 
@@ -31,11 +31,11 @@ void Schema::Advance()
 // Enregistre la solution
 void Schema::SaveSolution()
 {
-    _sys->SaveSolution(_t, _sol);
+    //_sys->SaveSolution(_t, _sol);
 }
 
 // Renvoie _sol 
-const VectorXd& Schema::GetIterateSolution() const
+const std::vector<double>& Schema::GetIterateSolution() const
 {
     return _sol;
 }
